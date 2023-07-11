@@ -1,2 +1,9 @@
 #!/bin/bash
-echo $((`echo $PATH | grep -o ":/" | wc -|`+ 1))
+IFS=':' read -ra directories <<< "$PATH"
+directory_count=0
+for dir in "${directories[@]}"; do
+  if [ -n "$dir" ]; then
+    ((directory_count++))
+  fi
+done
+echo "$directory_count"
